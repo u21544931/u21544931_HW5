@@ -1,0 +1,114 @@
+﻿@model HW5.Models.BooksVM
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Books</h2>
+@using (Html.BeginForm("Search", "Home", FormMethod.Post, new {@class = "form-inline" }))
+{
+    <form class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search Book Name" name="name" />
+        </div>
+        <div class="form-group">
+            <select class="form-control" name="type">
+                <option value="0">Select a type</option>
+
+                @foreach (var opt in Model.Types)
+                {
+                    <option value="@opt.ID">@opt.Name</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <select class="form-control" name="author">
+                <option value="0">Select a Author</option>
+                @foreach (var opt in Model.Authors)
+                {
+                    <option value="@opt.Id">@opt.Name @opt.Surname</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Search" style="width:150px" class="btn btn-success form-control" />
+        </div>
+
+        <div class="form-group">
+            
+            @Html.ActionLink("Clear", "Index", "Home", new {}, new {@class="btn btn-danger form-control", @style = "width:150px" })
+        </div>
+
+
+    </form>
+}
+
+<br />
+<table class="table">
+    <tr>
+        <th>
+            #
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Author
+        </th>
+        <th>
+           Type
+        </th>
+        <th>
+            Page Count
+        </th>
+        <th>
+            Points
+        </th>
+
+        <th>
+            Status
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Books)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Types)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PageCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Points)
+            </td>
+
+            <td>
+                @if (item.Status == "Book Out")
+                {
+                    <span style="color:red">Book Out</span>
+                }
+                else
+                {
+                    <span style="color:green">Available</span>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("View", "BookDetails", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
