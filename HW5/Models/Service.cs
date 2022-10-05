@@ -436,7 +436,7 @@ namespace HW5.Models
 
 
 
-            // status of the bbok
+            // status of the book
             foreach (var book in books)
             {
                 // Get all borrowed books
